@@ -7,7 +7,19 @@
     <title>Weatherify</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main>
+      <div id="app">
+        <form id="form">
+          <label for="location-input">Enter city name</label>
+          <input
+            id="location-input"
+            type="text"
+            placeholder="Enter city name"
+          />
+          <button type="submit">Get Weather</button>
+        </form>
+      </div>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
