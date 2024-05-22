@@ -7,14 +7,20 @@ async function getLocation(location: string) {
     );
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('Something went wrong!');
     }
+
     const data: unknown = await response.json();
+    if (data.length === 0) {
+      throw new Error('The location you requested was not found!');
+    }
+
     return data;
   } catch (error) {
-    console.error('Failed to get the location!', error);
+    console.error('Failed to fetch the location!', error);
+    throw error;
   } finally {
-    console.log('Location fetched!');
+    console.log('Location fetch completed!');
   }
 }
 

@@ -21,10 +21,12 @@ form?.addEventListener('submit', (e) => {
 });
 
 async function requestLocation(location: string) {
-  const locationData = (await getLocation(location)) as Location[];
-  const { lat, lon } = locationData[0];
-  const weather = await getWeather(Number(lat), Number(lon));
-  console.log(weather);
+  try {
+    const locationData = (await getLocation(location)) as Location[];
+    const { lat, lon } = locationData[0];
+    const weather = await getWeather(Number(lat), Number(lon));
+    console.log(weather.current);
+  } catch (error) {
+    console.error('Try again!', error);
+  }
 }
-
-export { locationData };
