@@ -1,11 +1,9 @@
 import './style.css';
 import { getWeather } from './api/getWeather';
 import { getLocation } from './api/getLocation';
-
-type Location = {
-  lat: string;
-  lon: string;
-};
+import { generateWeatherCard } from './helpers/generateMarkup';
+import { Location } from './lib/types';
+import { WeatherData } from './lib/types';
 
 const form = document.querySelector<HTMLFormElement>('#form');
 const input = document.querySelector<HTMLInputElement>('#location-input');
@@ -31,8 +29,15 @@ async function requestLocation(location: string) {
 
 async function requestWeather({ lat, lon }: Location) {
   try {
-    const weather = await getWeather(Number(lat), Number(lon));
-    const weatherIcon = weather.weather[0].icon;
+    const response = (await getWeather(Number(lat), Number(lon))) as any;
+    const weather: WeatherData = {
+      description: response.weather[0].description,
+      icon: response.weather[0].icon,
+      temp: response.main.temp,
+      name: response.name,
+    };
+
+    generateWeatherCard(weather);
     console.log(weather);
   } catch (error) {
     console.error('Try again!', error);
