@@ -1,3 +1,5 @@
+import { Location } from '../lib/types';
+
 const GEOCODE_API_KEY = import.meta.env.VITE_GEOCODE_API_KEY as string;
 
 async function getLocation(location: string) {
@@ -10,7 +12,7 @@ async function getLocation(location: string) {
       throw new Error('Something went wrong!');
     }
 
-    const data: unknown = await response.json();
+    const data: Location[] = await response.json();
     if (data.length === 0) {
       throw new Error('The location you requested was not found!');
     }
