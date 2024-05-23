@@ -20,25 +20,44 @@ form?.addEventListener('submit', (e) => {
 async function requestLocation(location: string) {
   try {
     const locationData = (await getLocation(location)) as Location[];
-    const { lat, lon } = locationData[0];
-    requestWeather({ lat, lon });
+    // const locationName = locationData[0].display_name;
+    const { lat, lon, display_name } = locationData[0];
+    requestWeather({ lat, lon, display_name });
   } catch (error) {
     console.error('Try again!', error);
   }
 }
 
-async function requestWeather({ lat, lon }: Location) {
+// if ('geolocation' in navigator) {
+//   navigator.geolocation.getCurrentPosition(
+//     (position) => {
+//       const { latitude, longitude } = position.coords;
+//       console.log(latitude, longitude);
+//       requestWeather({ lat: latitude.toString(), lon: longitude.toString() });
+//     },
+//     (error) => {
+//       console.error(error.message);
+//       requestWeather({ lat: '48.137154', lon: '	11.576124' });
+//     },
+//     { enableHighAccuracy: true }
+//   );
+// } else {
+//   console.log('Geolocation is not supported by this browser.');
+// }
+
+// requestWeather({ lat: '48.137154', lon: '	11.576124' });
+
+async function requestWeather({ lat, lon, display_name }: Location) {
   try {
     const response = (await getWeather(Number(lat), Number(lon))) as any;
     const weather: WeatherData = {
       description: response.weather[0].description,
       icon: response.weather[0].icon,
       temp: response.main.temp,
-      name: response.name,
+      name: display_name,
     };
-
     generateWeatherCard(weather);
-    console.log(weather);
+    console.log(response);
   } catch (error) {
     console.error('Try again!', error);
   }
