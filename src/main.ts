@@ -1,5 +1,4 @@
 import './style.css';
-
 import { getWeather } from './api/getWeather';
 import { getLocation } from './api/getLocation';
 
@@ -26,7 +25,7 @@ async function requestLocation(location: string) {
     const locationData = (await getLocation(location)) as Location[];
     const { lat, lon } = locationData[0];
     const weather = await getWeather(Number(lat), Number(lon));
-    console.log(weather.current);
+    console.log(weather);
   } catch (error) {
     console.error('Try again!', error);
   }
