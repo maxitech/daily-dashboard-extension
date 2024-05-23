@@ -3,7 +3,6 @@ import { getWeather } from './api/getWeather';
 import { getLocation } from './api/getLocation';
 
 type Location = {
-  display_name: string;
   lat: string;
   lon: string;
 };
@@ -24,7 +23,16 @@ async function requestLocation(location: string) {
   try {
     const locationData = (await getLocation(location)) as Location[];
     const { lat, lon } = locationData[0];
+    requestWeather({ lat, lon });
+  } catch (error) {
+    console.error('Try again!', error);
+  }
+}
+
+async function requestWeather({ lat, lon }: Location) {
+  try {
     const weather = await getWeather(Number(lat), Number(lon));
+    const weatherIcon = weather.weather[0].icon;
     console.log(weather);
   } catch (error) {
     console.error('Try again!', error);
