@@ -16,8 +16,9 @@ form?.addEventListener('submit', (e) => {
   e.preventDefault();
 
   if (input?.value == '' || input?.value == null) return;
-  const location = input?.value;
+  const location = input.value;
   requestLocation(location);
+  input.value = '';
 });
 
 async function requestLocation(location: string) {
