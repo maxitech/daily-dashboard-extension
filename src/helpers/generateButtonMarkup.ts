@@ -5,10 +5,6 @@ function generateButton() {
   button.textContent = 'Set as Default Location';
   button.id = 'default-location-button';
 
-  //   if (app && !app.contains(button)) {
-  //     app.appendChild(button);
-  //   }
-
   return button;
 }
 

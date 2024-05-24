@@ -21,7 +21,7 @@ form?.addEventListener('submit', (e) => {
 async function requestLocation(location: string) {
   try {
     const locationData = (await getLocation(location)) as Location[];
-    // const locationName = locationData[0].display_name;
+    const locationName = locationData[0].display_name;
     const { lat, lon, display_name } = locationData[0];
     requestWeather({ lat, lon, display_name });
   } catch (error) {
@@ -40,6 +40,7 @@ async function requestWeather({ lat, lon, display_name }: Location) {
     };
     generateWeatherCard(weather);
     toggleButtonVisibility(weather);
+    localStorage.setItem('weather', JSON.stringify(weather));
     console.log(weather);
   } catch (error) {
     console.error('Try again!', error);
@@ -67,16 +68,22 @@ checkLocalStorageAndGenerateWeatherCard();
 function toggleButtonVisibility(weatherData: WeatherData) {
   if (!weatherData) return;
   const app = document.querySelector<HTMLDivElement>('#app');
+  let setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
+    '#default-location-button'
+  );
 
-  const weatherDataAsString = JSON.stringify(weatherData);
+  const location = weatherData.name;
   const storedWeatherData = localStorage.getItem('weather');
+  const storedLocation: string = storedWeatherData
+    ? JSON.parse(storedWeatherData).name
+    : null;
 
-  const button = generateButton();
+  if (!setDefaultLocationButton) setDefaultLocationButton = generateButton();
 
-  if (weatherDataAsString === storedWeatherData) return;
+  if (location === storedLocation) return;
 
-  if (app && !app.contains(button)) {
-    app.appendChild(button);
+  if (app && !app.contains(setDefaultLocationButton)) {
+    app.appendChild(setDefaultLocationButton);
   }
 }
 
