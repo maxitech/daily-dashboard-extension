@@ -21,9 +21,9 @@ form?.addEventListener('submit', (e) => {
 async function requestLocation(location: string) {
   try {
     const locationData = (await getLocation(location)) as Location[];
-    const locationName = locationData[0].display_name;
     const { lat, lon, display_name } = locationData[0];
     requestWeather({ lat, lon, display_name });
+    return { lat, lon, display_name };
   } catch (error) {
     console.error('Try again!', error);
   }
@@ -40,22 +40,26 @@ async function requestWeather({ lat, lon, display_name }: Location) {
     };
     generateWeatherCard(weather);
     toggleButtonVisibility(weather);
-    localStorage.setItem('weather', JSON.stringify(weather));
-    console.log(weather);
+    updateLocalStorage(weather);
   } catch (error) {
     console.error('Try again!', error);
   }
 }
 
-function checkLocalStorageAndGenerateWeatherCard() {
-  const weatherData = localStorage.getItem('weather');
-  if (!weatherData) return;
+function updateLocalStorage(weatherData: WeatherData) {
+  const storedWeatherData = localStorage.getItem('weather');
+  const parsedStoredWeatherData = storedWeatherData
+    ? JSON.parse(storedWeatherData)
+    : null;
 
-  const parsedWeatherData: WeatherData = JSON.parse(weatherData);
-  generateWeatherCard(parsedWeatherData);
+  if (
+    !parsedStoredWeatherData ||
+    JSON.stringify(parsedStoredWeatherData) !== JSON.stringify(weatherData)
+  ) {
+    localStorage.setItem('weather', JSON.stringify(weatherData));
+    console.log('update local storage');
+  }
 }
-
-checkLocalStorageAndGenerateWeatherCard();
 
 // want a button to set a default location that should be remembered
 // button click should set the current location as default location in local storage
@@ -89,3 +93,11 @@ function toggleButtonVisibility(weatherData: WeatherData) {
 
 // step 3: add a click event listener to the button
 // step 4: set the current location as the default location in local storage
+
+function init() {
+  const storedWeatherData = localStorage.getItem('weather');
+  if (storedWeatherData) {
+    requestLocation(JSON.parse(storedWeatherData).name);
+  }
+}
+init();
