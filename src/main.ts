@@ -40,7 +40,7 @@ async function requestWeather({ lat, lon, display_name }: Location) {
     };
     generateWeatherCard(weather);
     toggleButtonVisibility(weather);
-    updateLocalStorage(weather);
+    handleSetDefaultLocationClick(weather);
   } catch (error) {
     console.error('Try again!', error);
   }
@@ -61,14 +61,6 @@ function updateLocalStorage(weatherData: WeatherData) {
   }
 }
 
-// want a button to set a default location that should be remembered
-// button click should set the current location as default location in local storage
-// -- if no location is given option should not be available(button not visible as long as no location is given)
-// -- if location is given option should be available
-
-// step 1: create a button
-
-// step 2: make the button visible only if a location is given
 function toggleButtonVisibility(weatherData: WeatherData) {
   if (!weatherData) return;
   const app = document.querySelector<HTMLDivElement>('#app');
@@ -91,10 +83,19 @@ function toggleButtonVisibility(weatherData: WeatherData) {
   }
 }
 
-// function handleSetDefaultLocation() {}
+function handleSetDefaultLocationClick(weather: WeatherData) {
+  const setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
+    '#default-location-button'
+  );
 
-// step 3: add a click event listener to the button
-// step 4: set the current location as the default location in local storage
+  if (!setDefaultLocationButton) return;
+
+  setDefaultLocationButton.addEventListener('click', () => {
+    updateLocalStorage(weather);
+    console.log('default location set');
+    setDefaultLocationButton.disabled = true;
+  });
+}
 
 function init() {
   const storedWeatherData = localStorage.getItem('weather');
