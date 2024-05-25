@@ -78,18 +78,20 @@ function toggleButtonVisibility(weatherData: WeatherData) {
 
   const location = weatherData.name;
   const storedWeatherData = localStorage.getItem('weather');
-  const storedLocation: string = storedWeatherData
+  const storedLocation: string | null = storedWeatherData
     ? JSON.parse(storedWeatherData).name
     : null;
 
   if (!setDefaultLocationButton) setDefaultLocationButton = generateButton();
 
-  if (location === storedLocation) return;
+  if (storedLocation && location === storedLocation) return;
 
   if (app && !app.contains(setDefaultLocationButton)) {
     app.appendChild(setDefaultLocationButton);
   }
 }
+
+// function handleSetDefaultLocation() {}
 
 // step 3: add a click event listener to the button
 // step 4: set the current location as the default location in local storage
