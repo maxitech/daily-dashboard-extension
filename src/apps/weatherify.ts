@@ -77,7 +77,11 @@ function toggleButtonVisibility(weatherData: WeatherData) {
     ? JSON.parse(storedWeatherData)
     : null;
 
-  if (!setDefaultLocationButton) setDefaultLocationButton = generateButton();
+  if (!setDefaultLocationButton)
+    setDefaultLocationButton = generateButton(
+      'Set as default location',
+      'default-location-button'
+    );
 
   if (storedLocation && location === storedLocation) return;
 
@@ -120,3 +124,12 @@ export function init() {
     requestLocation(JSON.parse(storedWeatherData));
   }
 }
+
+// todo: feature
+// button to click to see the weather forecast for the next 7 days
+// data should displayed in small boxes with day/date, weather icon, max temp and min temp
+
+// step 1: create a button
+// step 2: eventlistener on button that calls a function to fetch the data
+// step 3: create a function that fetches the data´
+// step 4: create a function that displays the data (creates markup for the boxes that will display the data)

@@ -1,7 +1,7 @@
-export default function generateButton() {
+export default function generateButton(textContent: string, id: string) {
   const button = document.createElement('button');
-  button.textContent = 'Set as Default Location';
-  button.id = 'default-location-button';
+  button.textContent = textContent;
+  button.id = id;
 
   return button;
 }
