@@ -1,8 +1,8 @@
-import { Location } from '../lib/types';
+import { Location } from '../../lib/types';
 
 const GEOCODE_API_KEY = import.meta.env.VITE_GEOCODE_API_KEY as string;
 
-async function getLocation(location: string) {
+export default async function getLocation(location: string) {
   try {
     const response = await fetch(
       `https://geocode.maps.co/search?q=${location}&api_key=${GEOCODE_API_KEY}`
@@ -25,5 +25,3 @@ async function getLocation(location: string) {
     console.log('Location fetch completed!');
   }
 }
-
-export { getLocation };

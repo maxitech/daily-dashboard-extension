@@ -1,6 +1,6 @@
 const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
-async function getWeather(lat: number, lon: number) {
+export default async function getWeather(lat: number, lon: number) {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
 
   try {
@@ -20,5 +20,3 @@ async function getWeather(lat: number, lon: number) {
     console.log('Weather fetch completed!');
   }
 }
-
-export { getWeather };

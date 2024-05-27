@@ -1,9 +1,9 @@
-import { WeatherData } from '../lib/types';
+import { WeatherData } from '../../lib/types';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 
 const weatherCard = document.createElement('section');
-function generateWeatherCard(weather: WeatherData) {
+export default function generateWeatherCard(weather: WeatherData) {
   // Create an image element
   const img = document.createElement('img');
   img.src = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;
@@ -36,5 +36,3 @@ function generateWeatherCard(weather: WeatherData) {
     app.appendChild(weatherCard);
   }
 }
-
-export { generateWeatherCard };
