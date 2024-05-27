@@ -1,5 +1,5 @@
 import '../style.css';
-import getWeather from '../api/weatherify/getWeather';
+import getWeather from '../api/weatherify/getCurrentWeather';
 import getLocation from '../api/weatherify/getLocation';
 import generateWeatherCard from '../helpers/weatherify/generateMarkup';
 import { Location } from '../lib/types';
