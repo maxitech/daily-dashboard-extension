@@ -13,7 +13,9 @@ form?.addEventListener('submit', (e) => {
   e.preventDefault();
 
   if (input?.value == '' || input?.value == null) return;
+
   const location = input.value;
+
   requestLocation(location);
   input.value = '';
 });
@@ -48,15 +50,15 @@ async function requestWeather({ lat, lon, display_name }: Location) {
 
 function updateLocalStorage(weatherData: WeatherData) {
   const storedWeatherData = localStorage.getItem('weather');
-  const parsedStoredWeatherData = storedWeatherData
+  const parsedStoredWeatherData: WeatherData | null = storedWeatherData
     ? JSON.parse(storedWeatherData)
     : null;
 
   if (
     !parsedStoredWeatherData ||
-    JSON.stringify(parsedStoredWeatherData) !== JSON.stringify(weatherData)
+    JSON.stringify(parsedStoredWeatherData) !== JSON.stringify(weatherData.name)
   ) {
-    localStorage.setItem('weather', JSON.stringify(weatherData));
+    localStorage.setItem('weather', JSON.stringify(weatherData.name));
     console.log('update local storage');
   }
 }
@@ -71,7 +73,7 @@ function toggleButtonVisibility(weatherData: WeatherData) {
   const location = weatherData.name;
   const storedWeatherData = localStorage.getItem('weather');
   const storedLocation: string | null = storedWeatherData
-    ? JSON.parse(storedWeatherData).name
+    ? JSON.parse(storedWeatherData)
     : null;
 
   if (!setDefaultLocationButton) setDefaultLocationButton = generateButton();
@@ -84,11 +86,21 @@ function toggleButtonVisibility(weatherData: WeatherData) {
 }
 
 function handleSetDefaultLocationClick(weather: WeatherData) {
-  const setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
+  let setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
     '#default-location-button'
   );
 
   if (!setDefaultLocationButton) return;
+
+  // Clone the button to remove the event listener
+  const clonedButton = setDefaultLocationButton.cloneNode(
+    true
+  ) as HTMLButtonElement;
+  setDefaultLocationButton.parentNode?.replaceChild(
+    clonedButton,
+    setDefaultLocationButton
+  );
+  setDefaultLocationButton = clonedButton;
 
   setDefaultLocationButton.addEventListener('click', () => {
     updateLocalStorage(weather);
@@ -99,8 +111,11 @@ function handleSetDefaultLocationClick(weather: WeatherData) {
 
 function init() {
   const storedWeatherData = localStorage.getItem('weather');
+  if (!storedWeatherData) {
+    requestLocation('Berlin');
+  }
   if (storedWeatherData) {
-    requestLocation(JSON.parse(storedWeatherData).name);
+    requestLocation(JSON.parse(storedWeatherData));
   }
 }
 init();
