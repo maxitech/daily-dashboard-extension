@@ -1,10 +1,12 @@
 import '../style.css';
-import getWeather from '../api/weatherify/getCurrentWeather';
+import getWeather from '../api/weatherify/getWeather';
 import getLocation from '../api/weatherify/getLocation';
 import generateWeatherCard from '../helpers/weatherify/generateMarkup';
 import { Location } from '../lib/types';
-import { WeatherData } from '../lib/types';
+import { CurrentWeatherData } from '../lib/types';
 import generateButton from '../helpers/weatherify/generateButtonMarkup';
+
+const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
 function handleInput() {
   const form = document.querySelector<HTMLFormElement>('#form');
@@ -26,6 +28,7 @@ async function requestLocation(location: string) {
     const locationData = (await getLocation(location)) as Location[];
     const { lat, lon, display_name } = locationData[0];
     requestWeather({ lat, lon, display_name });
+    // requestForecastWeather({ lat, lon, display_name });
     return { lat, lon, display_name };
   } catch (error) {
     console.error('Try again!', error);
@@ -33,9 +36,12 @@ async function requestLocation(location: string) {
 }
 
 async function requestWeather({ lat, lon, display_name }: Location) {
+  const url: string = `https://api.openweathermap.org/data/2.5/weather?lat=${Number(
+    lat
+  )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
   try {
-    const response = (await getWeather(Number(lat), Number(lon))) as any;
-    const weather: WeatherData = {
+    const response = (await getWeather(url)) as any;
+    const weather: CurrentWeatherData = {
       description: response.weather[0].description,
       icon: response.weather[0].icon,
       temp: response.main.temp,
@@ -49,9 +55,22 @@ async function requestWeather({ lat, lon, display_name }: Location) {
   }
 }
 
-function updateLocalStorage(weatherData: WeatherData) {
+// async function requestForecastWeather({ lat, lon, display_name }: Location) {
+//   const url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${Number(
+//     lat
+//   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
+//   try {
+//     const response = (await getWeather(url)) as any;
+
+//     console.log(response);
+//   } catch (error) {
+//     console.error('Try again!', error);
+//   }
+// }
+
+function updateLocalStorage(weatherData: CurrentWeatherData) {
   const storedWeatherData = localStorage.getItem('weather');
-  const parsedStoredWeatherData: WeatherData | null = storedWeatherData
+  const parsedStoredWeatherData: CurrentWeatherData | null = storedWeatherData
     ? JSON.parse(storedWeatherData)
     : null;
 
@@ -64,7 +83,7 @@ function updateLocalStorage(weatherData: WeatherData) {
   }
 }
 
-function toggleButtonVisibility(weatherData: WeatherData) {
+function toggleButtonVisibility(weatherData: CurrentWeatherData) {
   if (!weatherData) return;
   const app = document.querySelector<HTMLDivElement>('#app');
   let setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
@@ -90,12 +109,13 @@ function toggleButtonVisibility(weatherData: WeatherData) {
   }
 }
 
-function handleSetDefaultLocationClick(weather: WeatherData) {
+function handleSetDefaultLocationClick(weather: CurrentWeatherData) {
   let setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
     '#default-location-button'
   );
-
   if (!setDefaultLocationButton) return;
+
+  setDefaultLocationButton.disabled = false;
 
   // Clone the button to remove the event listener
   const clonedButton = setDefaultLocationButton.cloneNode(
@@ -125,6 +145,8 @@ export function init() {
   }
 }
 
+// !!! BUG !!!
+// !If location gets set as default location the button gets disabled but should enabled if new location is searcht which is not the same as set in storage
 // todo: feature
 // button to click to see the weather forecast for the next 7 days
 // data should displayed in small boxes with day/date, weather icon, max temp and min temp

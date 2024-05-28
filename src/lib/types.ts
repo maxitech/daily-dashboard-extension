@@ -4,11 +4,11 @@ type Location = {
   display_name: string;
 };
 
-type WeatherData = {
+type CurrentWeatherData = {
   description: string;
   icon: string;
   temp: number;
   name: string;
 };
 
-export type { WeatherData, Location };
+export type { CurrentWeatherData, Location };
