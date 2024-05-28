@@ -1,9 +1,9 @@
-import { WeatherData } from '../../lib/types';
+import { CurrentWeatherData } from '../../lib/types';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 
 const weatherCard = document.createElement('section');
-export default function generateWeatherCard(weather: WeatherData) {
+export default function generateWeatherCard(weather: CurrentWeatherData) {
   // Create an image element
   const img = document.createElement('img');
   img.src = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;

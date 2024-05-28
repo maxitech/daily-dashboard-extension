@@ -5,6 +5,7 @@ import generateWeatherCard from '../helpers/weatherify/generateMarkup';
 import { Location } from '../lib/types';
 import { CurrentWeatherData } from '../lib/types';
 import generateButton from '../helpers/weatherify/generateButtonMarkup';
+import cloneButton from '../helpers/weatherify/cloneButton';
 
 const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
@@ -28,14 +29,13 @@ async function requestLocation(location: string) {
     const locationData = (await getLocation(location)) as Location[];
     const { lat, lon, display_name } = locationData[0];
     requestWeather({ lat, lon, display_name });
-    // requestForecastWeather({ lat, lon, display_name });
-    return { lat, lon, display_name };
   } catch (error) {
     console.error('Try again!', error);
   }
 }
 
-async function requestWeather({ lat, lon, display_name }: Location) {
+async function requestWeather(location: Location) {
+  const { lat, lon, display_name } = location;
   const url: string = `https://api.openweathermap.org/data/2.5/weather?lat=${Number(
     lat
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
@@ -50,23 +50,50 @@ async function requestWeather({ lat, lon, display_name }: Location) {
     generateWeatherCard(weather);
     toggleButtonVisibility(weather);
     handleSetDefaultLocationClick(weather);
+    displayForecastButton();
+    handleForecastButtonClick(location);
   } catch (error) {
     console.error('Try again!', error);
   }
 }
 
-// async function requestForecastWeather({ lat, lon, display_name }: Location) {
-//   const url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${Number(
-//     lat
-//   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
-//   try {
-//     const response = (await getWeather(url)) as any;
+// ! Work in progress
+async function requestForecastWeather(location: Location) {
+  const { lat, lon } = location;
+  const url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${Number(
+    lat
+  )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
+  try {
+    const response = (await getWeather(url)) as any;
 
-//     console.log(response);
-//   } catch (error) {
-//     console.error('Try again!', error);
-//   }
-// }
+    const groupedWeatherData: { [date: string]: any[] } = {};
+
+    response.list.forEach((item: any) => {
+      const date = new Date(item.dt * 1000).toLocaleDateString();
+
+      if (!groupedWeatherData[date]) {
+        groupedWeatherData[date] = [];
+      }
+
+      groupedWeatherData[date].push(item);
+    });
+
+    for (const key in groupedWeatherData) {
+      console.log('Grouped weather data:', key);
+
+      groupedWeatherData[key].forEach((item) => {
+        const date = new Date(item.dt * 1000);
+        console.log(
+          key,
+          date.toLocaleTimeString(),
+          item.weather[0].description
+        );
+      });
+    }
+  } catch (error) {
+    console.error('Try again!', error);
+  }
+}
 
 function updateLocalStorage(weatherData: CurrentWeatherData) {
   const storedWeatherData = localStorage.getItem('weather');
@@ -109,6 +136,19 @@ function toggleButtonVisibility(weatherData: CurrentWeatherData) {
   }
 }
 
+function displayForecastButton() {
+  const app = document.querySelector<HTMLDivElement>('#app');
+  let forecastButton =
+    document.querySelector<HTMLButtonElement>('#forecast-button');
+
+  if (!forecastButton)
+    forecastButton = generateButton('Zur Vorhersage', 'forecast-button');
+
+  if (app && !app.contains(forecastButton)) {
+    app.appendChild(forecastButton);
+  }
+}
+
 function handleSetDefaultLocationClick(weather: CurrentWeatherData) {
   let setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
     '#default-location-button'
@@ -118,14 +158,7 @@ function handleSetDefaultLocationClick(weather: CurrentWeatherData) {
   setDefaultLocationButton.disabled = false;
 
   // Clone the button to remove the event listener
-  const clonedButton = setDefaultLocationButton.cloneNode(
-    true
-  ) as HTMLButtonElement;
-  setDefaultLocationButton.parentNode?.replaceChild(
-    clonedButton,
-    setDefaultLocationButton
-  );
-  setDefaultLocationButton = clonedButton;
+  setDefaultLocationButton = cloneButton(setDefaultLocationButton);
 
   setDefaultLocationButton.addEventListener('click', () => {
     updateLocalStorage(weather);
@@ -134,8 +167,24 @@ function handleSetDefaultLocationClick(weather: CurrentWeatherData) {
   });
 }
 
+function handleForecastButtonClick(location: Location) {
+  let forecastButton =
+    document.querySelector<HTMLButtonElement>('#forecast-button');
+
+  if (!forecastButton) return;
+
+  // Clone the button to remove the event listener
+  forecastButton = cloneButton(forecastButton);
+
+  forecastButton.addEventListener('click', () => {
+    console.log('forecast button clicked');
+    requestForecastWeather(location);
+  });
+}
+
 export function init() {
   handleInput();
+
   const storedWeatherData = localStorage.getItem('weather');
   if (!storedWeatherData) {
     requestLocation('Berlin');
@@ -145,13 +194,10 @@ export function init() {
   }
 }
 
-// !!! BUG !!!
-// !If location gets set as default location the button gets disabled but should enabled if new location is searcht which is not the same as set in storage
 // todo: feature
 // button to click to see the weather forecast for the next 7 days
 // data should displayed in small boxes with day/date, weather icon, max temp and min temp
 
-// step 1: create a button
 // step 2: eventlistener on button that calls a function to fetch the data
 // step 3: create a function that fetches the data´
 // step 4: create a function that displays the data (creates markup for the boxes that will display the data)
