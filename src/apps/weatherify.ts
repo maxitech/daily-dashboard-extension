@@ -1,9 +1,8 @@
 import '../style.css';
 import getWeather from '../api/weatherify/getWeather';
 import getLocation from '../api/weatherify/getLocation';
-import generateWeatherCard from '../helpers/weatherify/generateMarkup';
-import { Location } from '../lib/types';
-import { CurrentWeatherData } from '../lib/types';
+import generateWeatherCard from '../helpers/weatherify/generateWeatherCardMarkup';
+import { CurrentWeatherData, Location } from '../lib/types';
 import generateButton from '../helpers/weatherify/generateButtonMarkup';
 import cloneButton from '../helpers/weatherify/cloneButton';
 
@@ -50,46 +49,6 @@ async function requestWeather(location: Location) {
     generateWeatherCard(weather);
     toggleButtonVisibility(weather);
     handleSetDefaultLocationClick(weather);
-    displayForecastButton();
-    handleForecastButtonClick(location);
-  } catch (error) {
-    console.error('Try again!', error);
-  }
-}
-
-// ! Work in progress
-async function requestForecastWeather(location: Location) {
-  const { lat, lon } = location;
-  const url = `https://api.openweathermap.org/data/2.5/forecast/?lat=${Number(
-    lat
-  )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
-  try {
-    const response = (await getWeather(url)) as any;
-
-    const groupedWeatherData: { [date: string]: any[] } = {};
-
-    response.list.forEach((item: any) => {
-      const date = new Date(item.dt * 1000).toLocaleDateString();
-
-      if (!groupedWeatherData[date]) {
-        groupedWeatherData[date] = [];
-      }
-
-      groupedWeatherData[date].push(item);
-    });
-
-    for (const key in groupedWeatherData) {
-      console.log('Grouped weather data:', key);
-
-      groupedWeatherData[key].forEach((item) => {
-        const date = new Date(item.dt * 1000);
-        console.log(
-          key,
-          date.toLocaleTimeString(),
-          item.weather[0].description
-        );
-      });
-    }
   } catch (error) {
     console.error('Try again!', error);
   }
@@ -136,19 +95,6 @@ function toggleButtonVisibility(weatherData: CurrentWeatherData) {
   }
 }
 
-function displayForecastButton() {
-  const app = document.querySelector<HTMLDivElement>('#app');
-  let forecastButton =
-    document.querySelector<HTMLButtonElement>('#forecast-button');
-
-  if (!forecastButton)
-    forecastButton = generateButton('Zur Vorhersage', 'forecast-button');
-
-  if (app && !app.contains(forecastButton)) {
-    app.appendChild(forecastButton);
-  }
-}
-
 function handleSetDefaultLocationClick(weather: CurrentWeatherData) {
   let setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
     '#default-location-button'
@@ -167,21 +113,6 @@ function handleSetDefaultLocationClick(weather: CurrentWeatherData) {
   });
 }
 
-function handleForecastButtonClick(location: Location) {
-  let forecastButton =
-    document.querySelector<HTMLButtonElement>('#forecast-button');
-
-  if (!forecastButton) return;
-
-  // Clone the button to remove the event listener
-  forecastButton = cloneButton(forecastButton);
-
-  forecastButton.addEventListener('click', () => {
-    console.log('forecast button clicked');
-    requestForecastWeather(location);
-  });
-}
-
 export function init() {
   handleInput();
 
@@ -193,11 +124,3 @@ export function init() {
     requestLocation(JSON.parse(storedWeatherData));
   }
 }
-
-// todo: feature
-// button to click to see the weather forecast for the next 7 days
-// data should displayed in small boxes with day/date, weather icon, max temp and min temp
-
-// step 2: eventlistener on button that calls a function to fetch the data
-// step 3: create a function that fetches the data´
-// step 4: create a function that displays the data (creates markup for the boxes that will display the data)
