@@ -124,3 +124,4 @@ export function init() {
     requestLocation(JSON.parse(storedWeatherData));
   }
 }
+// Feature: add forecast fore the current day. Use open weather api and create api request and pick the weather for the current day out of it. display it in a card if button to display is clicked
