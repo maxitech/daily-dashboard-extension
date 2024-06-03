@@ -1,3 +1,8 @@
+type WeatherResponse = {
+  weather: { description: string; icon: string }[];
+  main: { temp: number };
+};
+
 export default async function getWeather(url: string) {
   try {
     const response = await fetch(url);
@@ -7,7 +12,7 @@ export default async function getWeather(url: string) {
       throw new Error(`${response.status} - ${response.statusText}`);
     }
 
-    const data: unknown = await response.json();
+    const data: WeatherResponse = await response.json();
     return data;
   } catch (error) {
     console.error('Failed to fetch weather data!', error);

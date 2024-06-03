@@ -39,7 +39,8 @@ async function requestWeather(location: Location) {
     lat
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
   try {
-    const response = (await getWeather(url)) as any;
+    const response = await getWeather(url);
+    console.log(response);
     const weather: CurrentWeatherData = {
       description: response.weather[0].description,
       icon: response.weather[0].icon,

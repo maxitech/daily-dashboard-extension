@@ -11,4 +11,4 @@ type CurrentWeatherData = {
   name: string;
 };
 
-export type { CurrentWeatherData, Location };
+export type { Location, CurrentWeatherData };
