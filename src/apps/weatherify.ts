@@ -2,7 +2,12 @@ import '../style.css';
 import getWeather from '../api/weatherify/getWeather';
 import getLocation from '../api/weatherify/getLocation';
 import generateWeatherCard from '../helpers/weatherify/generateWeatherCardMarkup';
-import { CurrentWeatherData, Location } from '../lib/types';
+import {
+  CurrentWeatherResponse,
+  ForecastResponse,
+  CurrentWeatherData,
+  Location,
+} from '../lib/types';
 import generateButton from '../helpers/weatherify/generateButtonMarkup';
 import cloneButton from '../helpers/weatherify/cloneButton';
 
@@ -28,6 +33,7 @@ async function requestLocation(location: string) {
     const locationData = (await getLocation(location)) as Location[];
     const { lat, lon, display_name } = locationData[0];
     requestWeather({ lat, lon, display_name });
+    requestForecastCurrentDay({ lat, lon, display_name });
   } catch (error) {
     console.error('Try again!', error);
   }
@@ -39,7 +45,7 @@ async function requestWeather(location: Location) {
     lat
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
   try {
-    const response = await getWeather(url);
+    const response = await getWeather<CurrentWeatherResponse>(url);
     console.log(response);
     const weather: CurrentWeatherData = {
       description: response.weather[0].description,
@@ -50,6 +56,21 @@ async function requestWeather(location: Location) {
     generateWeatherCard(weather);
     toggleButtonVisibility(weather);
     handleSetDefaultLocationClick(weather);
+  } catch (error) {
+    console.error('Try again!', error);
+  }
+}
+
+// ! Work in progress !!!!!!!!!
+
+async function requestForecastCurrentDay(location: Location) {
+  const { lat, lon, display_name } = location;
+  const url: string = `https://api.openweathermap.org/data/2.5/forecast?lat=${Number(
+    lat
+  )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
+  try {
+    const response = await getWeather<ForecastResponse>(url);
+    console.log(response);
   } catch (error) {
     console.error('Try again!', error);
   }

@@ -1,3 +1,15 @@
+type CurrentWeatherResponse = {
+  weather: { description: string; icon: string }[];
+  main: { temp: number };
+};
+
+type ForecastResponse = {
+  dt: number;
+  dt_txt: string;
+  main: { temp: number };
+  weather: { description: string; icon: string }[];
+}[];
+
 type Location = {
   lat: string;
   lon: string;
@@ -11,4 +23,9 @@ type CurrentWeatherData = {
   name: string;
 };
 
-export type { Location, CurrentWeatherData };
+export type {
+  CurrentWeatherResponse,
+  ForecastResponse,
+  Location,
+  CurrentWeatherData,
+};

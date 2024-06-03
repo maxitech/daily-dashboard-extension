@@ -1,9 +1,8 @@
-type WeatherResponse = {
-  weather: { description: string; icon: string }[];
-  main: { temp: number };
-};
+import { CurrentWeatherResponse, ForecastResponse } from '../../lib/types';
 
-export default async function getWeather(url: string) {
+export default async function getWeather<
+  T = CurrentWeatherResponse | ForecastResponse
+>(url: string): Promise<T> {
   try {
     const response = await fetch(url);
 
@@ -12,7 +11,7 @@ export default async function getWeather(url: string) {
       throw new Error(`${response.status} - ${response.statusText}`);
     }
 
-    const data: WeatherResponse = await response.json();
+    const data: T = await response.json();
     return data;
   } catch (error) {
     console.error('Failed to fetch weather data!', error);
