@@ -4,11 +4,13 @@ type CurrentWeatherResponse = {
 };
 
 type ForecastResponse = {
-  dt: number;
-  dt_txt: string;
-  main: { temp: number };
-  weather: { description: string; icon: string }[];
-}[];
+  list: {
+    dt: number;
+    dt_txt: string;
+    main: { temp: number };
+    weather: { description: string; icon: string }[];
+  }[];
+};
 
 type Location = {
   lat: string;

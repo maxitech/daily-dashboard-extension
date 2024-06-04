@@ -46,7 +46,6 @@ async function requestWeather(location: Location) {
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
   try {
     const response = await getWeather<CurrentWeatherResponse>(url);
-    console.log(response);
     const weather: CurrentWeatherData = {
       description: response.weather[0].description,
       icon: response.weather[0].icon,
@@ -70,7 +69,24 @@ async function requestForecastCurrentDay(location: Location) {
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
   try {
     const response = await getWeather<ForecastResponse>(url);
-    console.log(response);
+
+    // create a new object with the data grouped by day
+    const groupedByDay = response.list.reduce(
+      (acc: Record<string, typeof response.list>, curr) => {
+        const date = curr.dt_txt.split(' ')[0];
+
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+
+        acc[date].push(curr);
+
+        return acc;
+      },
+      {}
+    );
+
+    console.log(groupedByDay);
   } catch (error) {
     console.error('Try again!', error);
   }
