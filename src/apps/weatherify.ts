@@ -34,7 +34,6 @@ async function requestLocation(location: string) {
     const locationData = (await getLocation(location)) as Location[];
     const { lat, lon, display_name } = locationData[0];
     requestWeather({ lat, lon, display_name });
-    requestForecastCurrentDay({ lat, lon, display_name });
   } catch (error) {
     console.error('Try again!', error);
   }
@@ -56,6 +55,7 @@ async function requestWeather(location: Location) {
     generateWeatherCard(weather);
     toggleButtonVisibility(weather);
     handleSetDefaultLocationClick(weather);
+    requestForecastCurrentDay(location);
   } catch (error) {
     console.error('Try again!', error);
   }
@@ -64,7 +64,7 @@ async function requestWeather(location: Location) {
 // ! Work in progress !!!!!!!!!
 
 async function requestForecastCurrentDay(location: Location) {
-  const { lat, lon, display_name } = location;
+  const { lat, lon } = location;
   const url: string = `https://api.openweathermap.org/data/2.5/forecast?lat=${Number(
     lat
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
