@@ -3,6 +3,7 @@ import { CurrentWeatherData } from '../../lib/types';
 const app = document.querySelector<HTMLDivElement>('#app');
 
 const weatherCard = document.createElement('section');
+weatherCard.id = 'weather-card';
 export default function generateWeatherCard(weather: CurrentWeatherData) {
   // Create an image element
   const img = document.createElement('img');

@@ -118,7 +118,7 @@ function updateLocalStorage(weatherData: CurrentWeatherData) {
 
 function toggleButtonVisibility(weatherData: CurrentWeatherData) {
   if (!weatherData) return;
-  const app = document.querySelector<HTMLDivElement>('#app');
+  const test = document.querySelector<HTMLButtonElement>('#weather-card');
   let setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
     '#default-location-button'
   );
@@ -138,8 +138,8 @@ function toggleButtonVisibility(weatherData: CurrentWeatherData) {
 
   if (storedLocation && location === storedLocation) return;
 
-  if (app && !app.contains(setDefaultLocationButton)) {
-    app.appendChild(setDefaultLocationButton);
+  if (test && !test.contains(setDefaultLocationButton)) {
+    test.appendChild(setDefaultLocationButton);
   }
 }
 
