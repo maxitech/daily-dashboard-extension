@@ -2,14 +2,15 @@ import '../style.css';
 import getWeather from '../api/weatherify/getWeather';
 import getLocation from '../api/weatherify/getLocation';
 import generateWeatherCard from '../helpers/weatherify/generateWeatherCardMarkup';
+import generateForecastCard from '../helpers/weatherify/generateForecastCardMarkup';
+import generateButton from '../helpers/weatherify/generateButtonMarkup';
+import cloneButton from '../helpers/weatherify/cloneButton';
 import {
   CurrentWeatherResponse,
   ForecastResponse,
   CurrentWeatherData,
   Location,
 } from '../lib/types';
-import generateButton from '../helpers/weatherify/generateButtonMarkup';
-import cloneButton from '../helpers/weatherify/cloneButton';
 
 const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
@@ -69,6 +70,7 @@ async function requestForecastCurrentDay(location: Location) {
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
   try {
     const response = await getWeather<ForecastResponse>(url);
+    console.log(response);
 
     // create a new object with the data grouped by day
     const groupedByDay = response.list.reduce(
@@ -85,12 +87,12 @@ async function requestForecastCurrentDay(location: Location) {
       },
       {}
     );
-
     const currentDate = new Date().toISOString().split('T')[0];
     const weatherToday = groupedByDay[currentDate];
 
     if (weatherToday) {
       console.log(weatherToday);
+      generateForecastCard(weatherToday);
     } else {
       console.log('Keine Wetterdaten für das aktuelle Datum gefunden');
     }
@@ -127,11 +129,12 @@ function toggleButtonVisibility(weatherData: CurrentWeatherData) {
     ? JSON.parse(storedWeatherData)
     : null;
 
-  if (!setDefaultLocationButton)
+  if (!setDefaultLocationButton) {
     setDefaultLocationButton = generateButton(
       'Set as default location',
       'default-location-button'
     );
+  }
 
   if (storedLocation && location === storedLocation) return;
 
@@ -169,4 +172,7 @@ export function init() {
     requestLocation(JSON.parse(storedWeatherData));
   }
 }
-// Feature: add forecast fore the current day. Use open weather api and create api request and pick the weather for the current day out of it. display it in a card if button to display is clicked
+// Feature: add forecast fore the current day. Use open weather api and create api request and pick the weather for the current day out of it.
+
+// todo: display it in a card if button to display is clicked
+// step3: create a function to generate the markup for the forecast cart

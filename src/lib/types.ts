@@ -3,13 +3,22 @@ type CurrentWeatherResponse = {
   main: { temp: number };
 };
 
-type ForecastResponse = {
-  list: {
-    dt: number;
-    dt_txt: string;
-    main: { temp: number };
-    weather: { description: string; icon: string }[];
+type ForecastData = {
+  dt: number;
+  dt_txt: string;
+  main: {
+    temp: number;
+    temp_min: number;
+    temp_max: number;
+  };
+  weather: {
+    description: string;
+    icon: string;
   }[];
+};
+
+type ForecastResponse = {
+  list: ForecastData[];
 };
 
 type Location = {
@@ -27,6 +36,7 @@ type CurrentWeatherData = {
 
 export type {
   CurrentWeatherResponse,
+  ForecastData,
   ForecastResponse,
   Location,
   CurrentWeatherData,
