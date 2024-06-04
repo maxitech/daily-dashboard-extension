@@ -86,7 +86,14 @@ async function requestForecastCurrentDay(location: Location) {
       {}
     );
 
-    console.log(groupedByDay);
+    const currentDate = new Date().toISOString().split('T')[0];
+    const weatherToday = groupedByDay[currentDate];
+
+    if (weatherToday) {
+      console.log(weatherToday);
+    } else {
+      console.log('Keine Wetterdaten für das aktuelle Datum gefunden');
+    }
   } catch (error) {
     console.error('Try again!', error);
   }
