@@ -144,20 +144,21 @@ function toggleButtonVisibility(weatherData: CurrentWeatherData) {
 }
 
 function handleSetDefaultLocationClick(weather: CurrentWeatherData) {
-  let setDefaultLocationButton = document.querySelector<HTMLButtonElement>(
-    '#default-location-button'
-  );
-  if (!setDefaultLocationButton) return;
+  const main = document.querySelector('main');
+  if (!main) return;
 
-  setDefaultLocationButton.disabled = false;
+  main.addEventListener('click', (event) => {
+    if (
+      event.target instanceof HTMLElement &&
+      event.target.id === 'default-location-button'
+    ) {
+      let setDefaultLocationButton = event.target as HTMLButtonElement;
+      setDefaultLocationButton.disabled = false;
 
-  // Clone the button to remove the event listener
-  setDefaultLocationButton = cloneButton(setDefaultLocationButton);
-
-  setDefaultLocationButton.addEventListener('click', () => {
-    updateLocalStorage(weather);
-    console.log('default location set');
-    setDefaultLocationButton.disabled = true;
+      updateLocalStorage(weather);
+      console.log('default location set');
+      setDefaultLocationButton.disabled = true;
+    }
   });
 }
 
