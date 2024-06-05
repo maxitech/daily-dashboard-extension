@@ -15,6 +15,8 @@ export default function generateWeatherCard(weather: CurrentWeatherData) {
 
   // Create a paragraph element to display the location
   const infoDescription = document.createElement('p');
+  // infoDescription.classList.add('text-3xl');
+  // infoDescription.classList.add('underline');
   infoDescription.textContent = `${weather.description}`;
 
   // Create a paragraph element to display the temperature
