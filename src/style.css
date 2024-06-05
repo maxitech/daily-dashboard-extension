@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+/* body {
   background-color: gray;
 }
 
 .hidden {
   display: none;
-}
+} */
