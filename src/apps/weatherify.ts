@@ -1,9 +1,9 @@
 import '../style.css';
 import getWeather from '../api/weatherify/getWeather';
 import getLocation from '../api/weatherify/getLocation';
-import generateWeatherCard from '../helpers/weatherify/generateWeatherCardMarkup';
-import generateForecastCard from '../helpers/weatherify/generateForecastCardMarkup';
-import generateButton from '../helpers/weatherify/generateButtonMarkup';
+import generateWeatherCard from '../helpers/weatherify/markup/generateWeatherCardMarkup';
+import generateForecastCard from '../helpers/weatherify/markup/generateForecastCardMarkup';
+import generateButton from '../helpers/weatherify/markup/generateButtonMarkup';
 import cloneButton from '../helpers/weatherify/cloneButton';
 import {
   CurrentWeatherResponse,

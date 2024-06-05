@@ -1,6 +1,6 @@
-import { CurrentWeatherData } from '../../lib/types';
+import { CurrentWeatherData } from '../../../lib/types';
 
-const app = document.querySelector<HTMLDivElement>('#app');
+const pageContent = document.querySelector<HTMLDivElement>('#page-content');
 
 const weatherCard = document.createElement('section');
 weatherCard.id = 'weather-card';
@@ -35,7 +35,7 @@ export default function generateWeatherCard(weather: CurrentWeatherData) {
   infoContainer.appendChild(infoTemp);
   infoContainer.appendChild(infoLocationName);
 
-  if (app && !app.contains(weatherCard)) {
-    app.appendChild(weatherCard);
+  if (pageContent && !pageContent.contains(weatherCard)) {
+    pageContent.appendChild(weatherCard);
   }
 }

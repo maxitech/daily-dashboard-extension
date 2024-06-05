@@ -1,4 +1,4 @@
-import { ForecastData } from '../../lib/types';
+import { ForecastData } from '../../../lib/types';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 const forecastCard = document.createElement('section');
