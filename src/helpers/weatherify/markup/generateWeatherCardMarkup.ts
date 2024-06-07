@@ -4,6 +4,7 @@ const pageContent = document.querySelector<HTMLDivElement>('#page-content');
 
 const weatherCard = document.createElement('section');
 weatherCard.id = 'weather-card';
+weatherCard.classList.add('px-8');
 export default function generateWeatherCard(weather: CurrentWeatherData) {
   // Create an image element
   const img = document.createElement('img');
@@ -29,8 +30,8 @@ export default function generateWeatherCard(weather: CurrentWeatherData) {
 
   // Append the elements to the weather card
   weatherCard.innerHTML = '';
-  weatherCard.appendChild(img);
   weatherCard.appendChild(infoContainer);
+  infoContainer.appendChild(img);
   infoContainer.appendChild(infoDescription);
   infoContainer.appendChild(infoTemp);
   infoContainer.appendChild(infoLocationName);

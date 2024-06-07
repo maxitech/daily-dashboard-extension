@@ -1,7 +1,9 @@
 import { ForecastData } from '../../../lib/types';
 
-const app = document.querySelector<HTMLDivElement>('#app');
+const pageContent = document.querySelector<HTMLDivElement>('#page-content');
 const forecastCard = document.createElement('section');
+forecastCard.id = 'forecast-card';
+forecastCard.classList.add('flex', 'flex-wrap', 'gap-4', 'px-8');
 
 export default function generateForecastCard(forecast: ForecastData[]) {
   forecastCard.innerHTML = '';
@@ -37,8 +39,8 @@ export default function generateForecastCard(forecast: ForecastData[]) {
     container.appendChild(temp);
     container.appendChild(description);
 
-    if (app && !app.contains(forecastCard)) {
-      app.appendChild(forecastCard);
+    if (pageContent && !pageContent.contains(forecastCard)) {
+      pageContent.appendChild(forecastCard);
     }
   });
 }
