@@ -4,7 +4,6 @@ import getLocation from '../api/weatherify/getLocation';
 import generateWeatherCard from '../helpers/weatherify/markup/generateWeatherCardMarkup';
 import generateForecastCard from '../helpers/weatherify/markup/generateForecastCardMarkup';
 import generateButton from '../helpers/weatherify/markup/generateButtonMarkup';
-import cloneButton from '../helpers/weatherify/cloneButton';
 import {
   CurrentWeatherResponse,
   ForecastResponse,
