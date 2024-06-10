@@ -39,12 +39,18 @@ async function requestLocation(location: string) {
 }
 
 async function requestWeather(location: Location) {
+  const currentWeatherContainer = document.querySelector<HTMLDivElement>(
+    '#current-weather-container'
+  );
   const { lat, lon, display_name } = location;
   const url: string = `https://api.openweathermap.org/data/2.5/weather?lat=${Number(
     lat
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
   try {
-    const response = await getWeather<CurrentWeatherResponse>(url);
+    const response = await getWeather<CurrentWeatherResponse>(
+      url,
+      currentWeatherContainer
+    );
     const weather: CurrentWeatherData = {
       description: response.weather[0].description,
       icon: response.weather[0].icon,
@@ -57,18 +63,23 @@ async function requestWeather(location: Location) {
     requestForecastCurrentDay(location);
   } catch (error) {
     console.error('Try again!', error);
+  } finally {
+    console.log('Loading End');
   }
 }
 
 // ! Work in progress !!!!!!!!!
 
 async function requestForecastCurrentDay(location: Location) {
+  const forecastContainer = document.querySelector<HTMLDivElement>(
+    '#forecast-container'
+  );
   const { lat, lon } = location;
   const url: string = `https://api.openweathermap.org/data/2.5/forecast?lat=${Number(
     lat
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
   try {
-    const response = await getWeather<ForecastResponse>(url);
+    const response = await getWeather<ForecastResponse>(url, forecastContainer);
     console.log(response);
 
     // create a new object with the data grouped by day

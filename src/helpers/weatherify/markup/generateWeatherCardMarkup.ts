@@ -1,10 +1,12 @@
 import { CurrentWeatherData } from '../../../lib/types';
 
-const pageContent = document.querySelector<HTMLDivElement>('#page-content');
+// const pageContent = document.querySelector<HTMLDivElement>('#page-content');
+const weatherContainer = document.querySelector<HTMLDivElement>(
+  '#current-weather-container'
+);
 
 const weatherCard = document.createElement('section');
 weatherCard.id = 'weather-card';
-weatherCard.classList.add('px-8');
 export default function generateWeatherCard(weather: CurrentWeatherData) {
   // Create an image element
   const img = document.createElement('img');
@@ -36,7 +38,7 @@ export default function generateWeatherCard(weather: CurrentWeatherData) {
   infoContainer.appendChild(infoTemp);
   infoContainer.appendChild(infoLocationName);
 
-  if (pageContent && !pageContent.contains(weatherCard)) {
-    pageContent.appendChild(weatherCard);
+  if (weatherContainer && !weatherContainer.contains(weatherCard)) {
+    weatherContainer.appendChild(weatherCard);
   }
 }

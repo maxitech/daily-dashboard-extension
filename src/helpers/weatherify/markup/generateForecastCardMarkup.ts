@@ -1,9 +1,11 @@
 import { ForecastData } from '../../../lib/types';
 
-const pageContent = document.querySelector<HTMLDivElement>('#page-content');
+const pageContent = document.querySelector<HTMLDivElement>(
+  '#forecast-container'
+);
 const forecastCard = document.createElement('section');
 forecastCard.id = 'forecast-card';
-forecastCard.classList.add('flex', 'flex-wrap', 'gap-4', 'px-8');
+forecastCard.classList.add('flex', 'flex-wrap', 'gap-4');
 
 export default function generateForecastCard(forecast: ForecastData[]) {
   forecastCard.innerHTML = '';
