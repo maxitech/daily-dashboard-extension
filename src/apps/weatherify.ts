@@ -89,6 +89,7 @@ async function requestWeather(location: Location): Promise<CurrentWeatherData> {
     icon: response.weather[0].icon,
     temp: response.main.temp,
     name: display_name,
+    feels_like: response.main.feels_like,
   };
   return weather;
 }

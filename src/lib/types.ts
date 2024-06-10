@@ -1,6 +1,6 @@
 type CurrentWeatherResponse = {
   weather: { description: string; icon: string }[];
-  main: { temp: number };
+  main: { temp: number; feels_like: number };
 };
 
 type ForecastData = {
@@ -31,6 +31,7 @@ type CurrentWeatherData = {
   description: string;
   icon: string;
   temp: number;
+  feels_like: number;
   name: string;
 };
 
