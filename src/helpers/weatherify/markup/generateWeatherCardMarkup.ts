@@ -1,9 +1,7 @@
 import { CurrentWeatherData } from '../../../lib/types';
 
-// const pageContent = document.querySelector<HTMLDivElement>('#page-content');
-const weatherContainer = document.querySelector<HTMLDivElement>(
-  '#current-weather-container'
-);
+const weatherContainer =
+  document.querySelector<HTMLDivElement>('#weather-container');
 
 const weatherCard = document.createElement('section');
 weatherCard.id = 'weather-card';

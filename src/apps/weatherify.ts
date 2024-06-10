@@ -32,59 +32,26 @@ async function requestLocation(location: string) {
   try {
     const locationData = (await getLocation(location)) as Location[];
     const { lat, lon, display_name } = locationData[0];
-    requestWeather({ lat, lon, display_name });
+    requestWeatherAndForecast({ lat, lon, display_name });
   } catch (error) {
     console.error('Try again!', error);
   }
 }
 
-async function requestWeather(location: Location) {
-  const currentWeatherContainer = document.querySelector<HTMLDivElement>(
-    '#current-weather-container'
-  );
-  const { lat, lon, display_name } = location;
-  const url: string = `https://api.openweathermap.org/data/2.5/weather?lat=${Number(
-    lat
-  )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
+async function requestWeatherAndForecast(location: Location) {
   try {
-    const response = await getWeather<CurrentWeatherResponse>(
-      url,
-      currentWeatherContainer
-    );
-    const weather: CurrentWeatherData = {
-      description: response.weather[0].description,
-      icon: response.weather[0].icon,
-      temp: response.main.temp,
-      name: display_name,
-    };
+    const [weather, forecastResponse] = await Promise.all([
+      requestWeather(location),
+      requestForecastCurrentDay(location),
+    ]);
+
     generateWeatherCard(weather);
     toggleButtonVisibility(weather);
     handleSetDefaultLocationClick(weather);
-    requestForecastCurrentDay(location);
-  } catch (error) {
-    console.error('Try again!', error);
-  } finally {
-    console.log('Loading End');
-  }
-}
-
-// ! Work in progress !!!!!!!!!
-
-async function requestForecastCurrentDay(location: Location) {
-  const forecastContainer = document.querySelector<HTMLDivElement>(
-    '#forecast-container'
-  );
-  const { lat, lon } = location;
-  const url: string = `https://api.openweathermap.org/data/2.5/forecast?lat=${Number(
-    lat
-  )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
-  try {
-    const response = await getWeather<ForecastResponse>(url, forecastContainer);
-    console.log(response);
 
     // create a new object with the data grouped by day
-    const groupedByDay = response.list.reduce(
-      (acc: Record<string, typeof response.list>, curr) => {
+    const groupedByDay = forecastResponse.list.reduce(
+      (acc: Record<string, typeof forecastResponse.list>, curr) => {
         const date = curr.dt_txt.split(' ')[0];
 
         if (!acc[date]) {
@@ -100,15 +67,41 @@ async function requestForecastCurrentDay(location: Location) {
     const currentDate = new Date().toISOString().split('T')[0];
     const weatherToday = groupedByDay[currentDate];
 
-    if (weatherToday) {
-      console.log(weatherToday);
-      generateForecastCard(weatherToday);
-    } else {
+    if (weatherToday) generateForecastCard(weatherToday);
+    else {
       console.log('Keine Wetterdaten für das aktuelle Datum gefunden');
     }
   } catch (error) {
     console.error('Try again!', error);
+  } finally {
+    console.log('Loading End');
   }
+}
+
+async function requestWeather(location: Location): Promise<CurrentWeatherData> {
+  const { lat, lon, display_name } = location;
+  const url: string = `https://api.openweathermap.org/data/2.5/weather?lat=${Number(
+    lat
+  )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
+  const response = await getWeather<CurrentWeatherResponse>(url);
+  const weather: CurrentWeatherData = {
+    description: response.weather[0].description,
+    icon: response.weather[0].icon,
+    temp: response.main.temp,
+    name: display_name,
+  };
+  return weather;
+}
+
+async function requestForecastCurrentDay(
+  location: Location
+): Promise<ForecastResponse> {
+  const { lat, lon } = location;
+  const url: string = `https://api.openweathermap.org/data/2.5/forecast?lat=${Number(
+    lat
+  )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
+  const response = await getWeather<ForecastResponse>(url);
+  return response;
 }
 
 function updateLocalStorage(weatherData: CurrentWeatherData) {
@@ -183,7 +176,3 @@ export function init() {
     requestLocation(JSON.parse(storedWeatherData));
   }
 }
-// Feature: add forecast fore the current day. Use open weather api and create api request and pick the weather for the current day out of it.
-
-// todo: display it in a card if button to display is clicked
-// step3: create a function to generate the markup for the forecast cart

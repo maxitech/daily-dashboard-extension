@@ -1,8 +1,7 @@
 import { ForecastData } from '../../../lib/types';
 
-const pageContent = document.querySelector<HTMLDivElement>(
-  '#forecast-container'
-);
+const pageContent =
+  document.querySelector<HTMLDivElement>('#weather-container');
 const forecastCard = document.createElement('section');
 forecastCard.id = 'forecast-card';
 forecastCard.classList.add('flex', 'flex-wrap', 'gap-4');

@@ -1,13 +1,14 @@
 import { CurrentWeatherResponse, ForecastResponse } from '../../lib/types';
+import generateSpinner from '../../helpers/weatherify/markup/spinner';
 
-const spinner =
-  '<div id="spinner" class=""><span class="loading loading-spinner loading-lg"></span></div>';
+const container = document.querySelector('#weather-container');
+const spinner = generateSpinner();
 
 export default async function getWeather<
   T = CurrentWeatherResponse | ForecastResponse
->(url: string, container: HTMLDivElement | null): Promise<T> {
+>(url: string): Promise<T> {
   try {
-    if (container) container.innerHTML = spinner;
+    if (container) container.appendChild(spinner);
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -22,7 +23,6 @@ export default async function getWeather<
     throw error;
   } finally {
     console.log('Weather fetch completed!');
-
     const spinnerElement = document.querySelector('#spinner');
     if (spinnerElement && container?.contains(spinnerElement)) {
       container.removeChild(spinnerElement);
