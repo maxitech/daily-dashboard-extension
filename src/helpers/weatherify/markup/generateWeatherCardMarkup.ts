@@ -3,7 +3,7 @@ import { CurrentWeatherData } from '../../../lib/types';
 const weatherContainer =
   document.querySelector<HTMLDivElement>('#weather-container');
 
-const weatherCard = document.createElement('section');
+const weatherCard = document.createElement('div');
 weatherCard.id = 'weather-card';
 weatherCard.classList.add('bg-blue-600', 'rounded-lg', 'p-4', 'pt-6');
 export default function generateWeatherCard(weather: CurrentWeatherData) {
@@ -66,12 +66,16 @@ export default function generateWeatherCard(weather: CurrentWeatherData) {
   locationName.textContent = displayName;
   locationName.classList.add('text-xl', 'font-semibold');
 
+  const elementContainer = document.createElement('div');
+
   // Append the elements to the weather card
   weatherCard.innerHTML = '';
 
-  weatherCard.appendChild(locationName);
-  weatherCard.appendChild(weatherDescription);
-  weatherCard.appendChild(weatherDetailsContainer);
+  weatherCard.appendChild(elementContainer);
+
+  elementContainer.appendChild(locationName);
+  elementContainer.appendChild(weatherDescription);
+  elementContainer.appendChild(weatherDetailsContainer);
 
   weatherDetailsContainer.appendChild(img);
   weatherDetailsContainer.appendChild(infoContainer);
