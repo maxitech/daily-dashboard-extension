@@ -9,7 +9,7 @@
   <body class="font-sans">
     <main>
       <div id="app">
-        <div class="drawer">
+        <div class="drawer h-screen">
           <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
           <div class="drawer-content flex flex-col">
             <!-- Navbar -->
@@ -45,37 +45,125 @@
               </div>
             </div>
             <!-- Page content here -->
-            <section id="page-content">
-              <div
-                id="weather-container"
-                class="flex flex-col gap-4 items-end justify-end border"
-              >
-                <form id="form" class="flex gap-4">
-                  <label
-                    class="input input-bordered mb-2 flex items-center py-4 gap-2"
-                  >
-                    <input
-                      id="location-input"
-                      type="search"
-                      class="grow"
-                      placeholder="Search location"
-                    />
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 16 16"
-                      fill="currentColor"
-                      class="w-4 h-4 opacity-70"
+            <!-- !! Page content here -->
+            <section
+              id="page-content"
+              class="border mt-4 pr-4 border-cyan-500 h-full"
+            >
+              <div id="weather-content" class="h-full flex gap-4">
+                <div
+                  id="form-container"
+                  class="inline-block rounded-t-lg bg-blue-300"
+                >
+                  <form id="form">
+                    <label
+                      class="input input-bordered mb-2 flex items-center py-4 gap-2"
                     >
-                      <path
-                        fill-rule="evenodd"
-                        d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                        clip-rule="evenodd"
+                      <input
+                        id="location-input"
+                        type="search"
+                        class="grow"
+                        placeholder="Search location"
                       />
-                    </svg>
-                  </label>
-                </form>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                        class="w-4 h-4 opacity-70"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </label>
+                  </form>
+                </div>
 
-                <!-- Weather content here -->
+                <div
+                  id="weather-container"
+                  class="flex flex-col gap-8 pl-4 pr-4 w-full"
+                >
+                  <!-- Weather content here -->
+
+                  <div
+                    id="weather-card"
+                    class="bg-blue-600 rounded-lg p-4 pt-6"
+                  >
+                    <div class="flex justify-between">
+                      <div>
+                        <p class="text-3xl font-semibold">
+                          Unterwössen, Landkreis Traunstein
+                        </p>
+                        <p class="text-xl">Bedeckt</p>
+                      </div>
+                      <div
+                        class="flex items-center justify-end flex-col p-4 sm:flex-row sm:gap-6 sm:items-center md:min-w-[35em]"
+                      >
+                        <img
+                          src="https://openweathermap.org/img/wn/04d@2x.png"
+                          alt="Weather Icon"
+                        />
+                        <div class="flex flex-col">
+                          <p>Jetzt 10:59 Uhr</p>
+                          <p class="text-6xl font-semibold">16°</p>
+                          <p>fühlt sich 1° kälter an</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    id="forecast-card"
+                    class="flex flex-wrap gap-4 rounded-lg p-4 pt-6 bg-blue-700"
+                  >
+                    <div class="flex flex-col items-center justify-center">
+                      <p>09:00</p>
+                      <img
+                        src="https://openweathermap.org/img/wn/10d@2x.png"
+                        alt="Weather Icon"
+                      />
+                      <p>16°</p>
+                      <p>Leichter Regen</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                      <p>12:00</p>
+                      <img
+                        src="https://openweathermap.org/img/wn/10d@2x.png"
+                        alt="Weather Icon"
+                      />
+                      <p>15°</p>
+                      <p>Leichter Regen</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                      <p>15:00</p>
+                      <img
+                        src="https://openweathermap.org/img/wn/10d@2x.png"
+                        alt="Weather Icon"
+                      />
+                      <p>14°</p>
+                      <p>Mäßiger Regen</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                      <p>18:00</p>
+                      <img
+                        src="https://openweathermap.org/img/wn/10d@2x.png"
+                        alt="Weather Icon"
+                      />
+                      <p>13°</p>
+                      <p>Leichter Regen</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                      <p>21:00</p>
+                      <img
+                        src="https://openweathermap.org/img/wn/01n@2x.png"
+                        alt="Weather Icon"
+                      />
+                      <p>9°</p>
+                      <p>Klarer Himmel</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
           </div>
