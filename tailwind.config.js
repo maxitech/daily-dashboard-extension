@@ -15,9 +15,24 @@ export default {
       animation: {
         'fade-in-button': 'fade-in-button 0.5s forwards',
       },
+      backgroundImage: (theme) => ({
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-linear':
+          'linear-gradient(var(--tw-gradient-angle), var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(var(--tw-gradient-stops))',
+      }),
+      textShadow: {
+        default: '0 2px 5px rgba(0, 0, 0, 0.5)',
+        // Add more text shadows as needed
+      },
     },
   },
-  plugins: [require('daisyui')],
+  variants: {
+    extend: {
+      backgroundImage: ['responsive', 'hover', 'focus'],
+    },
+  },
+  plugins: [require('daisyui'), require('tailwindcss-textshadow')],
   daisyui: {
     themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: 'dark', // name of one of the included themes for dark mode

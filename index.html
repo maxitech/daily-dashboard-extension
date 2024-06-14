@@ -50,10 +50,10 @@
               id="page-content"
               class="border p-4 pb-0 border-cyan-500 h-full"
             >
-              <div id="weather-content" class="h-full flex gap-4">
-                <div
+              <div id="weather-content" class="">
+                <!-- <div
                   id="form-container"
-                  class="rounded-t-lg w-96 bg-gray-700 flex flex-col align-center pr-2 pl-2 pt-2"
+                  class="sm:w-full rounded-t-lg w-96 bg-gray-700 flex flex-col align-center pr-2 pl-2 pt-2"
                 >
                   <form id="form" class="">
                     <label
@@ -93,41 +93,137 @@
                       />
                     </div>
                   </button>
+                </div> -->
+                <div id="form-container" class="">
+                  <p class="text-xl font-semibold mb-2">Wetter</p>
+                  <form id="form" class="">
+                    <label
+                      class="input input-bordered flex items-center py-4 gap-2 relative"
+                    >
+                      <input
+                        id="location-input"
+                        type="search"
+                        class="grow"
+                        placeholder="Search location"
+                      />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                        class="w-4 h-4 opacity-70"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </label>
+                  </form>
+                  <!-- <div class="flex flex-col">
+                    <button
+                      id="location-button"
+                      class="flex justify-between items-center bg-slate-600 pl-4 pr-4 mt-4 rounded-lg text-left transition-opacity duration-500 ease-in opacity-0 animate-fade-in-button"
+                    >
+                      <p>München</p>
+                      <div class="flex items-center">
+                        <p>16°</p>
+                        <img
+                          src="https://openweathermap.org/img/wn/04d.png"
+                          alt="Weather Icon"
+                        />
+                      </div>
+                    </button>
+
+                    <button
+                      id="location-button"
+                      class="flex justify-between items-center bg-slate-600 pl-4 pr-4 mt-4 rounded-lg text-left transition-opacity duration-500 ease-in opacity-0 animate-fade-in-button"
+                    >
+                      <p>München</p>
+                      <div class="flex items-center">
+                        <p>16°</p>
+                        <img
+                          src="https://openweathermap.org/img/wn/04d.png"
+                          alt="Weather Icon"
+                        />
+                      </div>
+                    </button>
+                  </div> -->
                 </div>
 
-                <div
-                  id="weather-container"
-                  class="flex flex-col gap-8 pl-4 pr-4 w-full"
-                >
+                <div id="weather-container" class="mt-4">
                   <!-- Weather content here -->
 
                   <div
                     id="weather-card"
-                    class="bg-blue-600 rounded-lg p-4 pt-6"
+                    class="bg-gradient-to-r from-blue-600 to-gray-200/80 rounded-2xl"
                   >
+                    <div class="flex justify-between p-3">
+                      <div class="">
+                        <p
+                          class="font-semibold text-xl text-white/85 text-shadow-md"
+                        >
+                          Unterwössen
+                        </p>
+                        <div class="flex items-center">
+                          <span class="text-white font-semibold text-sm"
+                            >10:38
+                          </span>
+                        </div>
+                        <p class="font-semibold text-sm mt-8">Bedeckt</p>
+                      </div>
+                      <div class="flex flex-col justify-between">
+                        <div class="flex flex-col">
+                          <div class="flex items-center justify-end gap-4">
+                            <img
+                              src="https://openweathermap.org/img/wn/04d.png"
+                              alt="Weather Icon"
+                            />
+                            <p class="text-6xl text-white/85 text-shadow-sm">
+                              16°
+                            </p>
+                          </div>
+                        </div>
+                        <p class="font-semibold text-sm">
+                          fühlt sich 1° kälter an
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div id="weather-card" class="bg-blue-600 rounded-lg">
                     <div class="flex justify-between">
                       <div>
                         <p class="text-3xl font-semibold">
                           Unterwössen, Landkreis Traunstein
                         </p>
-                        <p class="text-xl">Bedeckt</p>
+                        <p class="text-lg mt-4">Wetter aktuell: Bedeckt</p>
                       </div>
                       <div
-                        class="flex items-center justify-end flex-col p-4 sm:flex-row sm:gap-6 sm:items-center md:min-w-[35em]"
+                        class="flex items-center justify-end flex-col mr-56 p-4 sm:flex-row sm:gap-6 sm:items-center md:min-w-[35em]"
                       >
                         <img
-                          src="https://openweathermap.org/img/wn/04d@2x.png"
+                          src="https://openweathermap.org/img/wn/04d@4x.png"
                           alt="Weather Icon"
                         />
                         <div class="flex flex-col">
-                          <p>Jetzt 10:59 Uhr</p>
-                          <p class="text-6xl font-semibold">16°</p>
-                          <p>fühlt sich 1° kälter an</p>
+                          <div>
+                            <span class="text-lg font-semibold pr-[0.5rem]"
+                              >Jetzt</span
+                            ><span class="text-lg text-white/80 font-semibold"
+                              >10:38 Uhr</span
+                            >
+                          </div>
+                          <p class="sm:text-8xl font-semibold">16°</p>
+                          <p class="text-lg font-semibold">
+                            fühlt sich 1° kälter an
+                          </p>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
+                  </div> -->
+
+                  <!-- <div
                     id="forecast-card"
                     class="flex flex-wrap gap-4 rounded-lg p-4 pt-6 bg-blue-700"
                   >
@@ -176,7 +272,7 @@
                       <p>9°</p>
                       <p>Klarer Himmel</p>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </section>

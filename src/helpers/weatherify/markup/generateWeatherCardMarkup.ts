@@ -61,8 +61,7 @@ export default function generateWeatherCard(weather: CurrentWeatherData) {
   // Create a paragraph element to display the location name
   const locationName = document.createElement('p');
   const nameParts = weather.name.split(',');
-  let displayName =
-    nameParts.length > 2 ? `${nameParts[0]}, ${nameParts[1]}` : weather.name;
+  let displayName = nameParts[0];
   locationName.textContent = displayName;
   locationName.classList.add('text-xl', 'font-semibold');
 
