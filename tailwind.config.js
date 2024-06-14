@@ -6,6 +6,15 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
+      keyframes: {
+        'fade-in-button': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        'fade-in-button': 'fade-in-button 0.5s forwards',
+      },
     },
   },
   plugins: [require('daisyui')],

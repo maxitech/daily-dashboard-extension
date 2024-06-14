@@ -48,16 +48,16 @@
             <!-- !! Page content here -->
             <section
               id="page-content"
-              class="border mt-4 pr-4 border-cyan-500 h-full"
+              class="border p-4 pb-0 border-cyan-500 h-full"
             >
               <div id="weather-content" class="h-full flex gap-4">
                 <div
                   id="form-container"
-                  class="inline-block rounded-t-lg bg-blue-300"
+                  class="rounded-t-lg w-96 bg-gray-700 flex flex-col align-center pr-2 pl-2 pt-2"
                 >
-                  <form id="form">
+                  <form id="form" class="">
                     <label
-                      class="input input-bordered mb-2 flex items-center py-4 gap-2"
+                      class="input input-bordered flex items-center py-4 gap-2 relative"
                     >
                       <input
                         id="location-input"
@@ -79,6 +79,20 @@
                       </svg>
                     </label>
                   </form>
+
+                  <button
+                    id="location-button"
+                    class="flex justify-between items-center bg-slate-600 pl-4 pr-4 mt-4 rounded-lg text-left transition-opacity duration-500 ease-in opacity-0 animate-fade-in-button"
+                  >
+                    <p>München</p>
+                    <div class="flex items-center">
+                      <p>16°</p>
+                      <img
+                        src="https://openweathermap.org/img/wn/04d.png"
+                        alt="Weather Icon"
+                      />
+                    </div>
+                  </button>
                 </div>
 
                 <div
