@@ -99,14 +99,14 @@
                   class="md:flex md:items-center md:justify-between"
                 >
                   <p class="text-xl font-semibold mb-2 md:text-3xl">Wetter</p>
-                  <form id="form" class="">
+                  <form id="form" class="lg:min-w-96">
                     <label
                       class="input input-bordered flex items-center py-4 gap-2 relative"
                     >
                       <input
                         id="location-input"
                         type="search"
-                        class="grow"
+                        class="grow lg:text-xl"
                         placeholder="Search location"
                       />
                       <svg
@@ -154,48 +154,52 @@
                   </div> -->
                 </div>
 
-                <div id="weather-container" class="mt-4 md:mt-6">
+                <div id="weather-container" class="mt-4 md:mt-6 lg:mt-10">
                   <!-- Weather content here -->
 
                   <div
                     id="weather-card"
-                    class="bg-gradient-to-r from-blue-600 to-gray-200/80 rounded-2xl"
+                    class="bg-gradient-to-r from-blue-600 to-gray-200/80 rounded-2xl lg:max-w-[50%]"
                   >
-                    <div class="flex justify-between p-3 md:px-5">
+                    <div
+                      class="flex justify-between p-3 md:px-5 lg:px-8 lg:py-6"
+                    >
                       <div class="">
                         <p
-                          class="font-semibold text-xl text-white/85 text-shadow-md md:text-3xl"
+                          class="font-semibold text-xl text-white/85 text-shadow-md md:text-3xl lg:text-4xl"
                         >
                           Unterwössen
                         </p>
                         <div class="flex items-center">
                           <span
-                            class="text-white font-semibold text-sm md:text-[1rem] md:mt-1"
+                            class="text-white font-semibold text-sm md:text-[1rem] md:mt-1 lg:text-xl lg:mt-2"
                             >10:38
                           </span>
                         </div>
                         <p
-                          class="font-semibold text-sm mt-8 md:text-[1rem] md:mt-10"
+                          class="font-semibold text-sm mt-8 md:text-[1rem] md:mt-10 lg:text-xl lg:mt-12"
                         >
                           Bedeckt
                         </p>
                       </div>
                       <div class="flex flex-col justify-between">
                         <div class="flex flex-col">
-                          <div class="flex items-center justify-end gap-4">
+                          <div class="flex items-center justify-end">
                             <img
                               src="https://openweathermap.org/img/wn/04d.png"
                               alt="Weather Icon"
-                              class="md:w-16"
+                              class="md:w-16 lg:w-20"
                             />
                             <p
-                              class="text-6xl text-white/85 text-shadow-sm md:text-7xl"
+                              class="text-6xl text-white/85 text-shadow-sm md:text-7xl lg:text-8xl"
                             >
                               16°
                             </p>
                           </div>
                         </div>
-                        <p class="font-semibold text-sm md:text-[1rem]">
+                        <p
+                          class="font-semibold text-sm md:text-[1rem] lg:text-xl"
+                        >
                           fühlt sich 1° kälter an
                         </p>
                       </div>
