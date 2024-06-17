@@ -94,8 +94,11 @@
                     </div>
                   </button>
                 </div> -->
-                <div id="form-container" class="">
-                  <p class="text-xl font-semibold mb-2">Wetter</p>
+                <div
+                  id="form-container"
+                  class="md:flex md:items-center md:justify-between"
+                >
+                  <p class="text-xl font-semibold mb-2 md:text-3xl">Wetter</p>
                   <form id="form" class="">
                     <label
                       class="input input-bordered flex items-center py-4 gap-2 relative"
@@ -151,26 +154,31 @@
                   </div> -->
                 </div>
 
-                <div id="weather-container" class="mt-4">
+                <div id="weather-container" class="mt-4 md:mt-6">
                   <!-- Weather content here -->
 
                   <div
                     id="weather-card"
                     class="bg-gradient-to-r from-blue-600 to-gray-200/80 rounded-2xl"
                   >
-                    <div class="flex justify-between p-3">
+                    <div class="flex justify-between p-3 md:px-5">
                       <div class="">
                         <p
-                          class="font-semibold text-xl text-white/85 text-shadow-md"
+                          class="font-semibold text-xl text-white/85 text-shadow-md md:text-3xl"
                         >
                           Unterwössen
                         </p>
                         <div class="flex items-center">
-                          <span class="text-white font-semibold text-sm"
+                          <span
+                            class="text-white font-semibold text-sm md:text-[1rem] md:mt-1"
                             >10:38
                           </span>
                         </div>
-                        <p class="font-semibold text-sm mt-8">Bedeckt</p>
+                        <p
+                          class="font-semibold text-sm mt-8 md:text-[1rem] md:mt-10"
+                        >
+                          Bedeckt
+                        </p>
                       </div>
                       <div class="flex flex-col justify-between">
                         <div class="flex flex-col">
@@ -178,13 +186,16 @@
                             <img
                               src="https://openweathermap.org/img/wn/04d.png"
                               alt="Weather Icon"
+                              class="md:w-16"
                             />
-                            <p class="text-6xl text-white/85 text-shadow-sm">
+                            <p
+                              class="text-6xl text-white/85 text-shadow-sm md:text-7xl"
+                            >
                               16°
                             </p>
                           </div>
                         </div>
-                        <p class="font-semibold text-sm">
+                        <p class="font-semibold text-sm md:text-[1rem]">
                           fühlt sich 1° kälter an
                         </p>
                       </div>
