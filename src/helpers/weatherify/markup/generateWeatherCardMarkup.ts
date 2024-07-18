@@ -3,87 +3,78 @@ import { CurrentWeatherData } from '../../../lib/types';
 const weatherContainer =
   document.querySelector<HTMLDivElement>('#weather-container');
 
-const weatherCard = document.createElement('div');
-weatherCard.id = 'weather-card';
-weatherCard.classList.add('bg-blue-600', 'rounded-lg', 'p-4', 'pt-6');
 export default function generateWeatherCard(weather: CurrentWeatherData) {
-  // Create a div element to hold the weather details
-  const weatherDetailsContainer = document.createElement('div');
-  weatherDetailsContainer.classList.add(
-    'flex',
-    'items-center',
-    'justify-end',
-    'flex-col',
-    'p-4',
-    'sm:flex-row',
-    'sm:gap-6',
-    'sm:items-center',
-    'md:min-w-[35em]'
-  );
-
-  // Create a div element to hold the weather info
-  const infoContainer = document.createElement('div');
-  infoContainer.classList.add('flex', 'flex-col');
-
-  // Create a paragraph element to display the temperature
-  const infoTemp = document.createElement('p');
-  infoTemp.textContent = `${Math.trunc(weather.temp)}°`;
-  infoTemp.classList.add('text-6xl', 'font-semibold');
-
-  // Create a paragraph element to display the time
-  const infoTime = document.createElement('p');
   const date = new Date();
-  infoTime.textContent = `Jetzt ${date.getHours()}:${date.getMinutes()} Uhr`;
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
-  // Create a paragraph element to display the feels like temperature
-  const infoFeelsLike = document.createElement('p');
   const tempDifference =
     Math.trunc(weather.feels_like) - Math.trunc(weather.temp);
+
+  console.log(weather.feels_like, weather.temp, tempDifference);
+  let infoFeelsLike;
   if (tempDifference > 0)
-    infoFeelsLike.textContent = `fühlt sich ${Math.abs(
-      tempDifference
-    )}° wärmer an`;
+    infoFeelsLike = `fühlt sich ${Math.abs(tempDifference)}° wärmer an`;
+  else if (tempDifference < 0)
+    infoFeelsLike = `fühlt sich ${Math.abs(tempDifference)}° kälter an`;
+  else infoFeelsLike = ``;
 
-  if (tempDifference < 0)
-    infoFeelsLike.textContent = `fühlt sich ${Math.abs(
-      tempDifference
-    )}° kälter an`;
-
-  // Create an image element
-  const img = document.createElement('img');
-  img.src = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;
-  img.alt = 'Weather Icon';
-
-  // Create a paragraph element to display the location
-  const weatherDescription = document.createElement('p');
-  weatherDescription.textContent = `${weather.description}`;
-
-  // Create a paragraph element to display the location name
-  const locationName = document.createElement('p');
   const nameParts = weather.name.split(',');
   let displayName = nameParts[0];
-  locationName.textContent = displayName;
-  locationName.classList.add('text-xl', 'font-semibold');
 
-  const elementContainer = document.createElement('div');
+  const markup = `
+           <div
+                    id="weather-card"
+                    class="bg-gradient-to-r from-blue-600 to-gray-200/80 rounded-2xl lg:max-w-[50%]"
+                  >
+                    <div
+                      class="flex justify-between p-3 md:px-5 lg:px-8 lg:py-6"
+                    >
+                      <div class="">
+                        <p
+                          class="font-semibold text-xl text-white/85 text-shadow-md md:text-3xl lg:text-4xl"
+                        >
+                          ${displayName}
+                        </p>
+                        <div class="flex items-center">
+                          <span
+                            class="text-white font-semibold text-sm md:text-[1rem] md:mt-1 lg:text-xl lg:mt-2"
+                            >${hours}:${minutes}
+                          </span>
+                        </div>
+                        <p
+                          class="font-semibold text-sm mt-8 md:text-[1rem] md:mt-10 lg:text-xl lg:mt-12"
+                        >
+                          Bedeckt
+                        </p>
+                      </div>
+                      <div class="flex flex-col justify-between">
+                        <div class="flex flex-col">
+                          <div class="flex items-center justify-end">
+                            <img
+                              src="https://openweathermap.org/img/wn/${
+                                weather.icon
+                              }.png"
+                              alt="Weather Icon"
+                              class="md:w-16 lg:w-20"
+                            />
+                            <p
+                              class="text-6xl text-white/85 text-shadow-sm md:text-7xl lg:text-8xl"
+                            >
+                              ${Math.trunc(weather.temp)}°
+                            </p>
+                          </div>
+                        </div>
+                        <p
+                          class="font-semibold text-sm md:text-[1rem] lg:text-xl"
+                        >
+                          ${infoFeelsLike}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+  `;
 
-  // Append the elements to the weather card
-  weatherCard.innerHTML = '';
-
-  weatherCard.appendChild(elementContainer);
-
-  elementContainer.appendChild(locationName);
-  elementContainer.appendChild(weatherDescription);
-  elementContainer.appendChild(weatherDetailsContainer);
-
-  weatherDetailsContainer.appendChild(img);
-  weatherDetailsContainer.appendChild(infoContainer);
-
-  infoContainer.appendChild(infoTime);
-  infoContainer.appendChild(infoTemp);
-  infoContainer.appendChild(infoFeelsLike);
-
-  if (weatherContainer && !weatherContainer.contains(weatherCard)) {
-    weatherContainer.appendChild(weatherCard);
-  }
+  if (weatherContainer) weatherContainer.innerHTML = markup;
+  else console.error('Weather container not found');
 }
