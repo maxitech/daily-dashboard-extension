@@ -1,6 +1,8 @@
 type CurrentWeatherResponse = {
   weather: { description: string; icon: string }[];
   main: { temp: number; feels_like: number };
+  dt: number;
+  timezone: number;
 };
 
 type ForecastData = {
@@ -33,6 +35,8 @@ type CurrentWeatherData = {
   temp: number;
   feels_like: number;
   name: string;
+  dt: number;
+  timezone: number;
 };
 
 export type {

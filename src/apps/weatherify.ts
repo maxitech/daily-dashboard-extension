@@ -90,6 +90,8 @@ async function requestWeather(location: Location): Promise<CurrentWeatherData> {
     temp: response.main.temp,
     name: display_name,
     feels_like: response.main.feels_like,
+    dt: response.dt,
+    timezone: response.timezone,
   };
   return weather;
 }

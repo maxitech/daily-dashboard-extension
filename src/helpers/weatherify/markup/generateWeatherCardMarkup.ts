@@ -4,14 +4,18 @@ const weatherContainer =
   document.querySelector<HTMLDivElement>('#weather-container');
 
 export default function generateWeatherCard(weather: CurrentWeatherData) {
-  const date = new Date();
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
+  function getLocalTime(dt: number, timezone: number) {
+    const localDate = new Date((dt + timezone) * 1000);
+
+    const hours = localDate.getUTCHours().toString().padStart(2, '0');
+    const minutes = localDate.getUTCMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+  }
 
   const tempDifference =
     Math.trunc(weather.feels_like) - Math.trunc(weather.temp);
 
-  console.log(weather.feels_like, weather.temp, tempDifference);
   let infoFeelsLike;
   if (tempDifference > 0)
     infoFeelsLike = `fühlt sich ${Math.abs(tempDifference)}° wärmer an`;
@@ -39,7 +43,7 @@ export default function generateWeatherCard(weather: CurrentWeatherData) {
                         <div class="flex items-center">
                           <span
                             class="text-white font-semibold text-sm md:text-[1rem] md:mt-1 lg:text-xl lg:mt-2"
-                            >${hours}:${minutes}
+                            > ${getLocalTime(weather.dt, weather.timezone)}
                           </span>
                         </div>
                         <p
