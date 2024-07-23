@@ -31,8 +31,8 @@ function handleInput() {
 async function requestLocation(location: string) {
   try {
     const locationData = (await getLocation(location)) as Location[];
-    const { lat, lon, display_name } = locationData[0];
-    requestWeatherAndForecast({ lat, lon, display_name });
+    const { lat, lon, name, local_names } = locationData[0];
+    requestWeatherAndForecast({ lat, lon, name, local_names });
   } catch (error) {
     console.error('Try again!', error);
   }
@@ -79,7 +79,7 @@ async function requestWeatherAndForecast(location: Location) {
 }
 
 async function requestWeather(location: Location): Promise<CurrentWeatherData> {
-  const { lat, lon, display_name } = location;
+  const { lat, lon, name, local_names } = location;
   const url: string = `https://api.openweathermap.org/data/2.5/weather?lat=${Number(
     lat
   )}&lon=${Number(lon)}&appid=${OPENWEATHER_API_KEY}&units=metric&lang=de`;
@@ -88,7 +88,8 @@ async function requestWeather(location: Location): Promise<CurrentWeatherData> {
     description: response.weather[0].description,
     icon: response.weather[0].icon,
     temp: response.main.temp,
-    name: display_name,
+    name: name,
+    local_names: local_names,
     feels_like: response.main.feels_like,
     dt: response.dt,
     timezone: response.timezone,

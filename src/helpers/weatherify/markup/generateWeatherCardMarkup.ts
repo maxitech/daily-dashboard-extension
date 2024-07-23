@@ -23,8 +23,9 @@ export default function generateWeatherCard(weather: CurrentWeatherData) {
     infoFeelsLike = `fühlt sich ${Math.abs(tempDifference)}° kälter an`;
   else infoFeelsLike = ``;
 
-  const nameParts = weather.name.split(',');
-  let displayName = nameParts[0];
+  const displayName = weather.local_names?.de
+    ? weather.local_names?.de
+    : weather.name;
 
   const markup = `
            <div

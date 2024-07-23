@@ -26,7 +26,8 @@ type ForecastResponse = {
 type Location = {
   lat: string;
   lon: string;
-  display_name: string;
+  name: string;
+  local_names: { de: string } | null;
 };
 
 type CurrentWeatherData = {
@@ -35,6 +36,7 @@ type CurrentWeatherData = {
   temp: number;
   feels_like: number;
   name: string;
+  local_names: { de: string } | null;
   dt: number;
   timezone: number;
 };

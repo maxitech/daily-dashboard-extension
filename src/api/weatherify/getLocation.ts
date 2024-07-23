@@ -1,17 +1,16 @@
 import { Location } from '../../lib/types';
 
-const GEOCODE_API_KEY = import.meta.env.VITE_GEOCODE_API_KEY as string;
+const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY as string;
 
 export default async function getLocation(location: string) {
   try {
     const response = await fetch(
-      `https://geocode.maps.co/search?q=${location}&api_key=${GEOCODE_API_KEY}`
+      ` http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${OPENWEATHER_API_KEY}`
     );
 
     if (!response.ok) {
       throw new Error('Something went wrong!');
     }
-
     const data: Location[] = await response.json();
     if (data.length === 0) {
       throw new Error('The location you requested was not found!');
