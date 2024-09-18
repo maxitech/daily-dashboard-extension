@@ -1,4 +1,5 @@
-import { ForecastData } from '../../../lib/types';
+import { CurrentWeatherData, ForecastData } from '../../../lib/types';
+import getLocalTime from '../getLocalTime';
 
 const weatherCard =
   document.querySelector<HTMLDivElement>('#weather-container');
@@ -6,7 +7,11 @@ const forecastCard = document.createElement('div');
 forecastCard.id = 'forecast-card';
 forecastCard.classList.add(
   'flex',
+  'items-center',
+  'justify-around',
   'flex-wrap',
+  'mt-4',
+  'lg:max-w-[50%]',
   'gap-4',
   'rounded-lg',
   'p-4',
@@ -14,7 +19,10 @@ forecastCard.classList.add(
   'bg-blue-700'
 );
 
-export default function generateForecastCard(forecast: ForecastData[]) {
+export default function generateForecastCard(
+  forecast: ForecastData[],
+  currentWeather: CurrentWeatherData
+) {
   forecastCard.innerHTML = '';
 
   forecast.forEach((weatherData) => {
@@ -25,12 +33,8 @@ export default function generateForecastCard(forecast: ForecastData[]) {
 
     // Create a paragraph element to display the time
     const time = document.createElement('p');
-    const date = new Date(weatherData.dt * 1000);
-    time.textContent = `${new Intl.DateTimeFormat('de-DE', {
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'UTC',
-    }).format(date)}`;
+    const timezone = currentWeather.timezone;
+    time.textContent = getLocalTime(weatherData.dt, timezone);
 
     // Create a paragraph element to display the temperature
     const temp = document.createElement('p');

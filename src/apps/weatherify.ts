@@ -67,7 +67,7 @@ async function requestWeatherAndForecast(location: Location) {
     const currentDate = new Date().toISOString().split('T')[0];
     const weatherToday = groupedByDay[currentDate];
 
-    if (weatherToday) generateForecastCard(weatherToday);
+    if (weatherToday) generateForecastCard(weatherToday, weather);
     else {
       console.log('Keine Wetterdaten für das aktuelle Datum gefunden');
     }

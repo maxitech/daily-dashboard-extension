@@ -1,18 +1,10 @@
 import { CurrentWeatherData } from '../../../lib/types';
+import getLocalTime from '../getLocalTime';
 
 const weatherContainer =
   document.querySelector<HTMLDivElement>('#weather-container');
 
 export default function generateWeatherCard(weather: CurrentWeatherData) {
-  function getLocalTime(dt: number, timezone: number) {
-    const localDate = new Date((dt + timezone) * 1000);
-
-    const hours = localDate.getUTCHours().toString().padStart(2, '0');
-    const minutes = localDate.getUTCMinutes().toString().padStart(2, '0');
-
-    return `${hours}:${minutes}`;
-  }
-
   const tempDifference =
     Math.trunc(weather.feels_like) - Math.trunc(weather.temp);
 
