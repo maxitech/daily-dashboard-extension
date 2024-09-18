@@ -1,6 +1,6 @@
-# WeatherWidget
+# Daily-Dashboard
 
-WeatherWidget is a modern web application that provides real-time weather updates. Built with TypeScript, DaisyUI, and TailwindCSS, this app allows users to search for weather conditions in any location. Users can also set a default location to automatically receive weather updates each time they load the application. The app utilizes the OpenWeatherMap API for weather data and the Geocoding API for location lookups.
+Daily-Dashboard is a modern web application that for now has a weather application that provides real-time weather updates. Built with TypeScript, DaisyUI, and TailwindCSS, this app allows users to search for weather conditions in any location. Users can also set a default location to automatically receive weather updates each time they load the application. The app utilizes the OpenWeatherMap API for weather data and the Geocoding API for location lookups.
 
 ## :computer: Try it Out!
 Currently, the application is not hosted. You can run it locally by following the instructions below.
@@ -13,7 +13,7 @@ Currently, the application is not hosted. You can run it locally by following th
 ### Application Preview
 Here's a glimpse of the WeatherWidget interface:
 
-![WeatherWidget Screenshot](src/assets/weather_widget.png)
+![Weatherify Screenshot](src/assets/weatherify.png)
 
 ## ⚡️ Technologies Used
 - TypeScript
@@ -36,7 +36,7 @@ Here's a glimpse of the WeatherWidget interface:
 - [Vite](https://vitejs.dev/): For fast and efficient build processes.
 
 ## 💭 Sources and Inspiration
-My development of WeatherWidget was guided by several valuable resources:
+My development of Weatherify was guided by several valuable resources:
   - [OpenWeatherMap API Documentation](https://openweathermap.org/api)
   - [TailwindCSS Documentation](https://tailwindcss.com/docs)
   - [DaisyUI Documentation](https://daisyui.com/docs/)
