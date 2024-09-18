@@ -11,7 +11,7 @@ Currently, the application is not hosted. You can run it locally by following th
 - **Real-time Updates:** Get up-to-date weather information with each search.
 
 ### Application Preview
-Here's a glimpse of the WeatherWidget interface:
+Here's a glimpse of the Weatherify interface:
 
 ![Weatherify Screenshot](src/assets/weatherify.png)
 
@@ -47,7 +47,7 @@ To run the project on your local machine, follow these steps:
 1. **Clone the Repository:**
 To run the project in your local environment, follow these steps: 
    ```bash
-   git clone https://github.com/yourusername/weatherwidget.git
+   git clone https://github.com/maxitech/daily-dashboard-extension.git
 2. **Run** `npm install` or `yarn` in the project directory to install the required dependencies.
 3. **Run** `npm run dev` or `yarn dev` to get the project started.
 4. **Open** [http://localhost:5173](http://localhost:5173) (or the address shown in your console) in your web browser to view app.
